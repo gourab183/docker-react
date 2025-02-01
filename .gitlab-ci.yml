@@ -6,4 +6,4 @@ build_image:
   before_script:
    - docker build -t gourab/docker-react -f Dockerfile.dev .
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker run -e CI=true gourab/docker-react npm run test
