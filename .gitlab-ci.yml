@@ -1,5 +1,6 @@
 build_image:
   stage: build
+  image: docker:latest
   before_script:
    - docker build -t gourab/docker-react -f Dockerfile.dev .
   script:
