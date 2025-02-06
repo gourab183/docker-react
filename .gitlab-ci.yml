@@ -22,8 +22,8 @@ deploy:
     - master
   script:
     - pip install awscli
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY
-    - aws configure set aws_secret_access_key $AWS_SECRET_KEY
-    - aws configure set default.region eu-north-1
-    - aws elasticbeanstalk create-application-version --application-name frontend --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-911167921077/frontend"
-    - aws elasticbeanstalk update-environment --environment-name Frontend-env
+    - aws --version-label v1 configure set aws_access_key_id $AWS_ACCESS_KEY
+    - aws --version-label v1 configure set aws_secret_access_key $AWS_SECRET_KEY
+    - aws --version-label v1 configure set default.region eu-north-1
+    - aws --version-label v1 elasticbeanstalk create-application-version --application-name frontend --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-911167921077/frontend"
+    - aws --version-label v1 elasticbeanstalk update-environment --environment-name Frontend-env
