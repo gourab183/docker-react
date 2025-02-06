@@ -21,7 +21,7 @@ build:
 
 deploy:
   stage: deploy
-  image: python:3.8
+  image: python:latest
   only:
     - master
   script:
