@@ -1,6 +1,33 @@
-build_image:
+stages:
+  - build
+  - deploy
+
+variables:
+  DOCKER_IMAGE: gourab/docker-react
+  AWS_ACCESS_KEY: $AWS_ACCESS_KEY
+  AWS_SECRET_KEY: $AWS_SECRET_KEY
+
+before_script:
+  - docker --version
+  - docker info
+
+build:
   stage: build
-  before_script:
-   - docker build -t gourab/docker-react -f Dockerfile.dev .
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker build -t $DOCKER_IMAGE -f Dockerfile.dev .
+
+deploy:
+  stage: deploy
+  image: python:3.8
+  only:
+    - main
+  script:
+    - pip install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY
+    - aws configure set aws_secret_access_key $AWS_SECRET_KEY
+    - aws configure set default.region eu-north-1
+    - aws elasticbeanstalk create-application-version --application-name frontend --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-911167921077/frontend"
+    - aws elasticbeanstalk update-environment --environment-name Frontend-env
