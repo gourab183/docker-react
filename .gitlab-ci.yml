@@ -26,5 +26,5 @@ deploy:
     - aws configure set aws_secret_access_key $AWS_SECRET_KEY
     - aws configure set default.region eu-north-1
     - aws s3 cp . s3://elasticbeanstalk-eu-north-1-911167921077/frontend --recursive
-    - aws elasticbeanstalk create-application-version --application-name frontend --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-911167921077",S3Key="AKIA5IJOXDO2XZUTXGSH" --version-label v1
+    - aws elasticbeanstalk create-application-version --application-name frontend --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-911167921077",S3Key="frontend" --version-label v1
     - aws elasticbeanstalk update-environment --environment-name Frontend-env --version-label v1
